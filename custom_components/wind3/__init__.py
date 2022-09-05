@@ -12,7 +12,7 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 
 from .const import DOMAIN, DEFAULT_UPDATE_INTERVAL_MIN
 
-from wind3 import VeryAPI
+from wind3 import W3API
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ PLATFORMS = [Platform.SENSOR]
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up wind3 from a config entry."""
 
-    api = VeryAPI(
+    api = W3API(
         entry.data["username"], entry.data["password"], async_get_clientsession(hass)
     )
 

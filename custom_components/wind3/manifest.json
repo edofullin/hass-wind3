@@ -1,9 +1,12 @@
 {
   "domain": "wind3",
   "name": "Wind3",
+  "version": "1.0.0",
   "config_flow": true,
   "documentation": "https://www.home-assistant.io/integrations/wind3",
-  "requirements": [],
+  "requirements": [
+    "w3pyconnect==1.0.0"
+  ],
   "codeowners": [
     "@edofullin"
   ],

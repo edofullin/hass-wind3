@@ -16,7 +16,7 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import DOMAIN
 
-from wind3 import VeryAPI
+from wind3 import W3API
 from wind3.exceptions import AuthenticationException, NoLinesException
 from aiohttp import ClientError
 
@@ -43,7 +43,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def async_auth(self, user_input: dict[str, str]) -> dict[str, str] | None:
         """Reusable Auth Helper."""
-        self.api = VeryAPI(
+        self.api = W3API(
             user_input[CONF_USERNAME],
             user_input[CONF_PASSWORD],
             async_get_clientsession(self.hass),
@@ -54,6 +54,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             return {"base": "invalid_auth"}
         except ClientError:
             return {"base": "cannot_connect"}
+        except:
+            return {"base": "unknown"}
         return None
 
     async def async_step_user(
