@@ -1,0 +1,6 @@
+{
+    "name": "Wind3",
+    "hacs": "1.24.5",
+    "domains": ["sensor"],
+    "homeassistant": "2022.8.0"
+}
