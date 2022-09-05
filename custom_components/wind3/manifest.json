@@ -1,0 +1,11 @@
+{
+  "domain": "wind3",
+  "name": "Wind3",
+  "config_flow": true,
+  "documentation": "https://www.home-assistant.io/integrations/wind3",
+  "requirements": [],
+  "codeowners": [
+    "@edofullin"
+  ],
+  "iot_class": "cloud_polling"
+}
