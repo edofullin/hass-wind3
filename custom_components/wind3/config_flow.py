@@ -17,7 +17,7 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from .const import DOMAIN
 
 from wind3 import W3API
-from wind3.exceptions import AuthenticationException, NoLinesException
+from wind3.exceptions import AuthenticationException
 from aiohttp import ClientError
 
 _LOGGER = logging.getLogger(__name__)
@@ -50,11 +50,12 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         )
         try:
             await self.api.login()
-        except AuthenticationException:
+        except AuthenticationException as ex:
+            _LOGGER.error(ex)
             return {"base": "invalid_auth"}
         except ClientError:
             return {"base": "cannot_connect"}
-        except:
+        except Exception:  # pylint: disable=broad-except
             return {"base": "unknown"}
         return None
 
@@ -65,7 +66,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = None
 
         if user_input is not None:
-            if not (errors := await self.async_auth(user_input)):
+            errors = await self.async_auth(user_input)
+            if errors is None:
+                _LOGGER.debug("Config flow: login ok")
                 await self.async_set_unique_id(user_input[CONF_USERNAME].lower())
                 self._abort_if_unique_id_configured()
 
